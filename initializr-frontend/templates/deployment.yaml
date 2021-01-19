@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "initializr-frontend.fullname" . }}
+  labels:
+{{ include "initializr-frontend.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "initializr-frontend.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "initializr-frontend.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ template "initializr-frontend.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: install-node-sh
+              mountPath: /script/
+            - name: nginx-cnf
+              mountPath: /config/
+          command:
+            - sh
+            - "-c"
+            - |
+              ./script/install_node.sh
+          env:
+            - name: FRONTENDREPO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.codeRepositories.frontendRepo.secretName }}
+                  key: username
+            - name: FRONTENDREPO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.codeRepositories.frontendRepo.secretName }}
+                  key: password
+          #livenessProbe:
+          #  httpGet:
+          #    path: /
+          #    port: 80
+          #readinessProbe:
+          #  httpGet:
+          #    path: /test/test
+          #    port: 80
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: install-node-sh
+          configMap:
+            name: frontend-config
+            defaultMode: 0777
+            items:
+              - key: install_node.sh
+                path: install_node.sh
+        - name: nginx-cnf
+          configMap:
+            name: frontend-config
+            defaultMode: 0644
+            items:
+              - key: default.cnf
+                path: default.cnf
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
