@@ -80,6 +80,7 @@ data:
     mv {{ .Values.codeRepositories.frontendRepo.owner }}-{{ .Values.codeRepositories.frontendRepo.name }}* {{ .Values.codeRepositories.frontendRepo.name }}
     cd {{ .Values.codeRepositories.frontendRepo.name }}
     #sed -i "/apiEndpoint/c\apiEndpoint:'http://{{ .Release.Name }}-initializr-backend:8080'" src/environments/environment.ts
+    sed -i "/apiEndpoint/c\apiEndpoint:window.origin" src/environments/environment.ts
     npm i
     
     cp /config/default.cnf /etc/nginx/conf.d/default.conf
