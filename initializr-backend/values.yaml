@@ -93,21 +93,27 @@ codeRepositories:
   # Yeoman based application to generate the project from the templates
   generatorRepo:
     name: "APPCLR-PlatformInitializr"
-    owner: "imcloudbot"
-    user: "imcloudbot"
-    ref: "develop"
+    owner: "imatia-innovation"
+    user: "david-gonzalez-imatia"
+    ref: "jx-integration"
     secretName: "repo-secret"
   # Springboot backend with REST api
   backendRepo:
     name: "APPWSC-PlatformInitializr"
-    owner: "imcloudbot"
-    user: "imcloudbot"
-    ref: "develop"
+    owner: "imatia-innovation"
+    user: "david-gonzalez-imatia"
+    ref: "jx-integration"
     secretName: "repo-secret"
   # Templates for the generator
   templatesRepo:
     name: "APPCLR-PlatformInitializr-templates"
-    owner: "imcloudbot"
-    user: "imcloudbot"
-    ref: "develop"
+    owner: "imatia-innovation"
+    user: "david-gonzalez-imatia"
+    ref: "jx-integration"
     secretName: "repo-secret"
+    
+repoBot:
+  name: "imcloudbot"
+  organization: "implatformdev"
+  secretName: "repo-secret2"
+  email: "implatform.technology@imatia.com"

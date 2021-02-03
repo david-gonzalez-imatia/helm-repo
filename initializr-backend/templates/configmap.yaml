@@ -57,7 +57,9 @@ data:
     && npm --version
 
     ## Install required packages to operate jx
+    
     ### EKS
+    
     # Install aws cli and authenticator
     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
     unzip awscliv2.zip
@@ -74,21 +76,28 @@ data:
     curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
     chmod +x kubectl
     mv ./kubectl /usr/local/bin/kubectl
-    aws eks --region <region-code> update-kubeconfig --name <cluster_name>
+    #aws eks --region <region-code> update-kubeconfig --name <cluster_name>
+    
     ### GKE
+    
     # Install Google Cloud SDK
     curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-323.0.0-linux-x86_64.tar.gz
     tar xfz google-cloud-sdk-323.0.0-linux-x86_64.tar.gz -C /opt
     /opt/google-cloud-sdk/install.sh --usage-reporting false --rc-path ~/.bashrc --path-update true --command-completion true
-    gcloud components install kubectl -q
+    #gcloud components install kubectl -q
     # **************** Use secret and helm for credentials json file ***********
-    gcloud auth activate-service-account --key-file=credential_key.json
+    #gcloud auth activate-service-account --key-file=credential_key.json
     # **************** Use helm to set project ***********
-    gcloud config set project my-project
-
+    #gcloud config set project my-project
+    
     # Install jx
     curl -L "https://github.com/jenkins-x/jx/releases/download/$(curl --silent "https://github.com/jenkins-x/jx/releases/latest" | sed 's#.*tag/\(.*\)\".*#\1#')/jx-linux-amd64.tar.gz" | tar xzv "jx"
-    mv jx /usr/local/bin    
+    mv jx /usr/local/bin
+    
+    # Config git
+    git config --global user.email "{{ .Values.repoBot.email }}"
+    git config --global user.name "{{ .Values.repoBot.name }}"
+    
 
     ## Copy generator sources
     # Get code with github api and curl
@@ -96,7 +105,7 @@ data:
     #tar xpf $REPO.tar.gz
     # Get code with git
     cd
-    git clone https://oauth2:$GENERATORREPO_PASSWORD@github.com/{{ .Values.codeRepositories.generatorRepo.owner }}/{{ .Values.codeRepositories.generatorRepo.name }}.git
+    git clone https://oauth2:$GENERATORREPO_PASSWORD@github.com/{{ .Values.codeRepositories.generatorRepo.owner }}/{{ .Values.codeRepositories.generatorRepo.name }}.git --branch {{ .Values.codeRepositories.generatorRepo.ref }}
     mv {{ .Values.codeRepositories.generatorRepo.name }} /generator-app
     cd /generator-app/generator-platform-initializr
     npm install
@@ -106,7 +115,7 @@ data:
 
     ## Copy templates
     cd
-    git clone https://oauth2:$TEMPLATESREPO_PASSWORD@github.com/{{ .Values.codeRepositories.templatesRepo.owner }}/{{ .Values.codeRepositories.templatesRepo.name }}.git
+    git clone https://oauth2:$TEMPLATESREPO_PASSWORD@github.com/{{ .Values.codeRepositories.templatesRepo.owner }}/{{ .Values.codeRepositories.templatesRepo.name }}.git --branch {{ .Values.codeRepositories.templatesRepo.ref }}
     shopt -s dotglob
     mv {{ .Values.codeRepositories.templatesRepo.name }}/* /tmp/platform-initializr/{{ .Values.codeRepositories.templatesRepo.name }}
     shopt -u dotglob
@@ -117,9 +126,9 @@ data:
     #tar xpf $REPO.tar.gz
     # Get code with git
     cd
-    git clone https://oauth2:$BACKENDREPO_PASSWORD@github.com/{{ .Values.codeRepositories.backendRepo.owner }}/{{ .Values.codeRepositories.backendRepo.name }}.git
+    git clone https://oauth2:$BACKENDREPO_PASSWORD@github.com/{{ .Values.codeRepositories.backendRepo.owner }}/{{ .Values.codeRepositories.backendRepo.name }}.git --branch {{ .Values.codeRepositories.backendRepo.ref }}
     mv {{ .Values.codeRepositories.backendRepo.name }} /backend-app
     cd /backend-app
     mvn clean package
     mvn install
-    java -jar /backend-app/target/appwsc-platforminitializr.jar
+    java -jar /backend-app/target/appwsc-platforminitializr.jar --git-user={{ .Values.repoBot.name }} --git-token=$REPOBOT_TOKEN --git-organization={{ .Values.repoBot.organization }}

@@ -74,6 +74,11 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.codeRepositories.templatesRepo.secretName }}
                   key: password
+            - name: REPOBOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.repoBot.secretName }}
+                  key: password
           #livenessProbe:
           #  httpGet:
           #    path: /
