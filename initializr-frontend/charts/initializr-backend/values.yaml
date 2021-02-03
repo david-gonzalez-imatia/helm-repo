@@ -81,12 +81,6 @@ persistence:
   accessMode: ReadWriteOnce
   size: 10Mi
 
-# Kubernetes providers
-
-clusters:
-  eksEnabled: false
-  gkeEnabled: true
-
 # Repositories
 
 codeRepositories:
