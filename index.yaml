@@ -3,7 +3,7 @@ entries:
   initializr-backend:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-02-03T11:49:32.162425523+01:00"
+    created: "2021-02-03T12:51:30.996191285+01:00"
     description: A Helm chart for Kubernetes
     digest: 685cf457cd4c548f9fa96dc24dd39bab7128eaf110e5e1b6a8d2afeffae3da76
     name: initializr-backend
@@ -12,7 +12,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-02-03T11:49:32.161967976+01:00"
+    created: "2021-02-03T12:51:30.995609498+01:00"
     description: A Helm chart for Kubernetes
     digest: 6dde2767d333d399cf945cd8f353e463041967ec0e75848d95d0f5831b5775bb
     name: initializr-backend
@@ -22,20 +22,20 @@ entries:
   initializr-frontend:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-02-03T11:49:32.16420278+01:00"
+    created: "2021-02-03T12:51:30.998455117+01:00"
     dependencies:
     - name: initializr-backend
       repository: https://david-gonzalez-imatia.github.io/helm-repo/
       version: 0.2.0
     description: A Helm chart for Kubernetes
-    digest: 04b254acfdb450280604ca6b9b3859f84f23820c16245984bd439417f09ada4f
+    digest: 43c86001fcc23959228ddf85e75f2849f2fcef05c47d1313bcadead637570736
     name: initializr-frontend
     urls:
     - https://david-gonzalez-imatia.github.io/helm-repo/initializr-frontend-0.2.0.tgz
     version: 0.2.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-02-03T11:49:32.163556118+01:00"
+    created: "2021-02-03T12:51:30.99745134+01:00"
     dependencies:
     - name: initializr-backend
       repository: ""
@@ -46,4 +46,4 @@ entries:
     urls:
     - https://david-gonzalez-imatia.github.io/helm-repo/initializr-frontend-0.1.0.tgz
     version: 0.1.0
-generated: "2021-02-03T11:49:32.154438012+01:00"
+generated: "2021-02-03T12:51:30.992863905+01:00"
