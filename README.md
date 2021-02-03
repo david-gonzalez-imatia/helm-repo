@@ -1,6 +1,21 @@
-# Test Helm Charts repository
+# ImPlatform Initializr Helm Charts repository
 
-In order to deploy the templates you must create a secret that includes the token or password to access git repositories:
+Create the following secret files with the tokens to access the code repositories and the bot account:
+
+secret2.yaml
+
+```sh
+apiVersion: v1
+kind: Secret
+metadata:
+  name: repo-secret2
+type: kubernetes.io/basic-auth
+stringData:
+  username: repouser
+  password: 55frtrtaiu54pfaeru34f345exampletoken
+``` 
+
+secret.yaml 
 
 ```sh
 apiVersion: v1
@@ -9,8 +24,12 @@ metadata:
   name: repo-secret
 type: kubernetes.io/basic-auth
 stringData:
-  username: user
-  password: password
-```  
+  username: botuser
+  password: 55frtrtaiu54pfaeru34f345exampletoken
+``` 
 
-Add the secret to the namespace you want with kubectl and configure the name of the secret in the values.yaml file in the chart.
+Add the secrets to your Kubernetes cluster:
+
+```sh
+$ kubectl apply -f secret.yaml 
+``` 
