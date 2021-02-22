@@ -32,16 +32,16 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: LoadBalancer
+  type: ClusterIP
   port: 80
 
 ingress:
-  enabled: false
+  enabled: true
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: initializr.35.184.135.11.nip.io
+    - host: imatia.35.184.135.11.nip.io
       paths: [/]
 
   tls: []
@@ -73,7 +73,7 @@ codeRepositories:
     name: "APPWEB-PlatformInitializr"
     owner: "imatia-innovation"
     user: "david-gonzalez-imatia"
-    ref: "develop"
+    ref: "jx-activities"
     secretName: "repo-secret"
 
 backend:
@@ -119,19 +119,21 @@ initializr-backend:
     # readOnlyRootFilesystem: true
     # runAsNonRoot: true
     # runAsUser: 1000
+  
+  mavenRepository: http://nexus-jx.35.184.135.11.nip.io/repository/maven-group/ 
 
   service:
     type: ClusterIP
     port: 8080
 
   ingress:
-    enabled: false
+    enabled: true
     annotations: {}
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
     hosts:
-      - host: chart-example.local
-        paths: []
+      - host: initializr-backend.35.184.135.11.nip.io
+        paths: [/]
 
     tls: []
     #  - secretName: chart-example-tls
@@ -191,7 +193,7 @@ initializr-backend:
       name: "APPWSC-PlatformInitializr"
       owner: "imatia-innovation"
       user: "david-gonzalez-imatia"
-      ref: "jx-integration"
+      ref: "jx-activities"
       secretName: "repo-secret"
     # Templates for the generator
     templatesRepo:
@@ -206,3 +208,9 @@ initializr-backend:
     organization: "implatformdev"
     secretName: "repo-secret2"
     email: "implatform.technology@imatia.com"
+  
+  postgresql:
+    postgresqlPostgresPassword: test
+    postgresqlUsername: testuser
+    postgresqlPassword: testuser
+    postgresqlDatabase: imatiaapps

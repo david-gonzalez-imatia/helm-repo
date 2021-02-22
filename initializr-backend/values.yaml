@@ -30,6 +30,8 @@ securityContext: {}
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
+  
+mavenRepository: http://nexus-jx.146.148.57.202.nip.io/repository/maven-group/ 
 
 service:
   type: ClusterIP
@@ -102,7 +104,7 @@ codeRepositories:
     name: "APPWSC-PlatformInitializr"
     owner: "imatia-innovation"
     user: "david-gonzalez-imatia"
-    ref: "jx-integration"
+    ref: "jx-activities"
     secretName: "repo-secret"
   # Templates for the generator
   templatesRepo:
@@ -117,3 +119,9 @@ repoBot:
   organization: "implatformdev"
   secretName: "repo-secret2"
   email: "implatform.technology@imatia.com"
+  
+postgresql:
+  postgresqlPostgresPassword: test
+  postgresqlUsername: testuser
+  postgresqlPassword: testuser
+  postgresqlDatabase: imatiaapps

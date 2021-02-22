@@ -79,6 +79,8 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.repoBot.secretName }}
                   key: password
+            - name: DATABASE_SERVICE
+              value: {{ .Release.Name }}-postgresql
           #livenessProbe:
           #  httpGet:
           #    path: /

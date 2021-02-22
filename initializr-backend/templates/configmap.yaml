@@ -98,7 +98,6 @@ data:
     git config --global user.email "{{ .Values.repoBot.email }}"
     git config --global user.name "{{ .Values.repoBot.name }}"
     
-
     ## Copy generator sources
     # Get code with github api and curl
     #curl -L -H "Accept: application/vnd.github.v3+json" -u $USER:$TOKEN https://api.github.com/repos/$OWNER/$REPO/tarball/$REF --output $REPO.tar.gz
@@ -115,11 +114,14 @@ data:
 
     ## Copy templates
     cd
-    git clone https://oauth2:$TEMPLATESREPO_PASSWORD@github.com/{{ .Values.codeRepositories.templatesRepo.owner }}/{{ .Values.codeRepositories.templatesRepo.name }}.git --branch {{ .Values.codeRepositories.templatesRepo.ref }}
-    shopt -s dotglob
-    mv {{ .Values.codeRepositories.templatesRepo.name }}/* /tmp/platform-initializr/{{ .Values.codeRepositories.templatesRepo.name }}
-    shopt -u dotglob
-
+    if [ -n "$(find "$DIR_TO_CHECK" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then
+      git clone https://oauth2:$TEMPLATESREPO_PASSWORD@github.com/{{ .Values.codeRepositories.templatesRepo.owner }}/{{ .Values.codeRepositories.templatesRepo.name }}.git --branch {{ .Values.codeRepositories.templatesRepo.ref }}
+      shopt -s dotglob
+      mv {{ .Values.codeRepositories.templatesRepo.name }}/* /tmp/platform-initializr/{{ .Values.codeRepositories.templatesRepo.name }}
+      shopt -u dotglob
+    else
+      echo "Templates already present in persistent volume"
+    fi
     ## Copy springboot sources and install dependencies
     # Get code with github api and curl
     #curl -L -H "Accept: application/vnd.github.v3+json" -u $USER:$TOKEN https://api.github.com/repos/$OWNER/$REPO/tarball/$REF --output $REPO.tar.gz
@@ -129,6 +131,8 @@ data:
     git clone https://oauth2:$BACKENDREPO_PASSWORD@github.com/{{ .Values.codeRepositories.backendRepo.owner }}/{{ .Values.codeRepositories.backendRepo.name }}.git --branch {{ .Values.codeRepositories.backendRepo.ref }}
     mv {{ .Values.codeRepositories.backendRepo.name }} /backend-app
     cd /backend-app
+    sed -i "s/<\/project>//" pom.xml
+    echo -e "<repositories>\n<repository>\n<id>nexus</id>\n<url>{{ .Values.mavenRepository }}</url>\n</repository>\n</repositories>\n</project>" >> pom.xml
     mvn clean package
     mvn install
     java -jar /backend-app/target/appwsc-platforminitializr.jar --git-user={{ .Values.repoBot.name }} --git-token=$REPOBOT_TOKEN --git-organization={{ .Values.repoBot.organization }}
