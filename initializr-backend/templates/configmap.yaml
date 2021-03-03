@@ -114,7 +114,7 @@ data:
 
     ## Copy templates
     cd
-    if [ -n "$(find "$DIR_TO_CHECK" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then
+    if [ ! -d "/tmp/platform-initializr/{{ .Values.codeRepositories.templatesRepo.name }}/java" ]; then
       git clone https://oauth2:$TEMPLATESREPO_PASSWORD@github.com/{{ .Values.codeRepositories.templatesRepo.owner }}/{{ .Values.codeRepositories.templatesRepo.name }}.git --branch {{ .Values.codeRepositories.templatesRepo.ref }}
       shopt -s dotglob
       mv {{ .Values.codeRepositories.templatesRepo.name }}/* /tmp/platform-initializr/{{ .Values.codeRepositories.templatesRepo.name }}

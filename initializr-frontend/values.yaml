@@ -41,7 +41,7 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: imatia.35.184.135.11.nip.io
+    - host: imatia.146.148.57.202.nip.io
       paths: [/]
 
   tls: []
@@ -120,7 +120,7 @@ initializr-backend:
     # runAsNonRoot: true
     # runAsUser: 1000
   
-  mavenRepository: http://nexus-jx.35.184.135.11.nip.io/repository/maven-group/ 
+  mavenRepository: http://nexus-jx.146.148.57.202.nip.io/repository/maven-group/ 
 
   service:
     type: ClusterIP
@@ -132,7 +132,7 @@ initializr-backend:
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
     hosts:
-      - host: initializr-backend.35.184.135.11.nip.io
+      - host: initializr-backend.146.148.57.202.nip.io
         paths: [/]
 
     tls: []
