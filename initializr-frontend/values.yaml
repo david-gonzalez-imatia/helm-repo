@@ -34,6 +34,16 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 80
+      
+probePath: /
+readinessProbe:
+  failureThreshold: 5
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 1
+startupProbe:
+  failureThreshold: 12
+  periodSeconds: 10
 
 ingress:
   enabled: true
@@ -120,11 +130,21 @@ initializr-backend:
     # runAsNonRoot: true
     # runAsUser: 1000
   
-  mavenRepository: http://nexus-jx.146.148.57.202.nip.io/repository/maven-group/ 
+  mavenRepository: http://nexus-jx.34.90.3.84.nip.io/repository/maven-group/ 
 
   service:
     type: ClusterIP
     port: 8080
+    
+  probePath: /test/test
+  readinessProbe:
+    failureThreshold: 5
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 1
+  startupProbe:
+    failureThreshold: 30
+    periodSeconds: 10
 
   ingress:
     enabled: true

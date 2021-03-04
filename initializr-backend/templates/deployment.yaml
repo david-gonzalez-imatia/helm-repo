@@ -81,14 +81,19 @@ spec:
                   key: password
             - name: DATABASE_SERVICE
               value: {{ .Release.Name }}-postgresql
-          #livenessProbe:
-          #  httpGet:
-          #    path: /
-          #    port: 8080
-          #readinessProbe:
-          #  httpGet:
-          #    path: /test/test
-          #    port: 8080
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.probePath }}
+              port: http
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+          startupProbe:
+            httpGet:
+              path: {{ .Values.probePath }}
+              port: http
+            periodSeconds: {{ .Values.startupProbe.periodSeconds }}
+            failureThreshold: {{ .Values.startupProbe.failureThreshold }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
