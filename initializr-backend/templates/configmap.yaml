@@ -61,17 +61,17 @@ data:
     ### EKS
     
     # Install aws cli and authenticator
-    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-    unzip awscliv2.zip
-    ./aws/install
+    #curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    #unzip awscliv2.zip
+    #./aws/install
     # **************** Use secret and helm for credentials and configuration ***********
-    #aws --profile default configure set aws_access_key_id AKIASTZHO6DA3VITGQ35
-    #aws --profile default configure set aws_secret_access_key wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-    #aws --profile default configure set region eu-west-1
-    #aws --profile default configure set output json
-    curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.18.9/2020-11-02/bin/linux/amd64/aws-iam-authenticator
-    chmod +x aws-iam-authenticator
-    mv aws-iam-authenticator /usr/local/bin/aws-iam-authenticator    
+    ##aws --profile default configure set aws_access_key_id AKIASTZHO6DA3VITGQ35
+    ##aws --profile default configure set aws_secret_access_key wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+    ##aws --profile default configure set region eu-west-1
+    ##aws --profile default configure set output json
+    #curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.18.9/2020-11-02/bin/linux/amd64/aws-iam-authenticator
+    #chmod +x aws-iam-authenticator
+    #mv aws-iam-authenticator /usr/local/bin/aws-iam-authenticator    
     # Install kubectl
     curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
     chmod +x kubectl
@@ -86,7 +86,8 @@ data:
     /opt/google-cloud-sdk/install.sh --usage-reporting false --rc-path ~/.bashrc --path-update true --command-completion true
     #gcloud components install kubectl -q
     # **************** Use secret and helm for credentials json file ***********
-    #gcloud auth activate-service-account --key-file=credential_key.json
+    source ~/.bashrc
+    gcloud auth activate-service-account --key-file="/mnt/credentials/{{ .Values.provider.credentials }}"
     # **************** Use helm to set project ***********
     #gcloud config set project my-project
     

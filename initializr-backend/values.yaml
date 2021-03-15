@@ -31,13 +31,19 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
   
-mavenRepository: http://nexus-jx.146.148.57.202.nip.io/repository/maven-group/ 
+provider:
+  gke: true
+  aws: false
+  secret: "secretjson"
+  credentials: "jx-tests-im-7f5e6b6ae5b7.json"
+  
+mavenRepository: http://nexus-jx.34.90.3.84.nip.io/repository/maven-group/ 
 
 service:
   type: ClusterIP
   port: 8080
 
-probePath: /test/test
+probePath: /health
 readinessProbe:
   failureThreshold: 5
   periodSeconds: 30
@@ -53,7 +59,7 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: initializr-backend.146.148.57.202.nip.io
+    - host: initializr-backend.34.90.3.84.nip.io
       paths: [/]
 
   tls: []
@@ -107,7 +113,7 @@ codeRepositories:
     name: "APPCLR-PlatformInitializr"
     owner: "imatia-innovation"
     user: "david-gonzalez-imatia"
-    ref: "jx-integration"
+    ref: "develop"
     secretName: "repo-secret"
   # Springboot backend with REST api
   backendRepo:
@@ -121,7 +127,7 @@ codeRepositories:
     name: "APPCLR-PlatformInitializr-templates"
     owner: "imatia-innovation"
     user: "david-gonzalez-imatia"
-    ref: "jx-integration"
+    ref: "develop"
     secretName: "repo-secret"
     
 repoBot:

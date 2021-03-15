@@ -38,6 +38,10 @@ spec:
               mountPath: /tmp/platform-initializr/APPCLR-PlatformInitializr-templates/
             - name: install-node-sh
               mountPath: /docker-entrypoint.d/
+            {{- if .Values.provider.gke }}
+            - name: credentials-volume
+              mountPath: /mnt/credentials/
+            {{- end }}
           command:
             - bash
             - "-c"
@@ -81,13 +85,17 @@ spec:
                   key: password
             - name: DATABASE_SERVICE
               value: {{ .Release.Name }}-postgresql
-          readinessProbe:
-            httpGet:
-              path: {{ .Values.probePath }}
-              port: http
-            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
-            successThreshold: {{ .Values.readinessProbe.successThreshold }}
-            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+            {{- if .Values.provider.gke }}
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/mnt/credentials/{{ .Values.provider.credentials }}"
+            {{- end }}
+          #readinessProbe:
+          #  httpGet:
+          #    path: {{ .Values.probePath }}
+          #    port: http
+          #  periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          #  successThreshold: {{ .Values.readinessProbe.successThreshold }}
+          #  timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
           startupProbe:
             httpGet:
               path: {{ .Values.probePath }}
@@ -104,6 +112,11 @@ spec:
             items:
               - key: install_node.sh
                 path: install_node.sh
+        {{- if .Values.provider.gke }}
+        - name: credentials-volume
+          secret:
+            secretName: {{ .Values.provider.secret }}
+        {{- end }}
         - name: templates-volume
         {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
