@@ -90,6 +90,7 @@ data:
     gcloud auth activate-service-account --key-file="/mnt/credentials/credentials-json"
     # **************** Use helm to set project ***********
     gcloud config set project $PROJECT
+    gcloud container clusters get-credentials $CLUSTER --zone=$ZONE
     
     # Install jx
     curl -L "https://github.com/jenkins-x/jx/releases/download/$(curl --silent "https://github.com/jenkins-x/jx/releases/latest" | sed 's#.*tag/\(.*\)\".*#\1#')/jx-linux-amd64.tar.gz" | tar xzv "jx"
@@ -136,4 +137,4 @@ data:
     echo -e "<repositories>\n<repository>\n<id>nexus</id>\n<url>{{ .Values.mavenRepository }}</url>\n</repository>\n</repositories>\n</project>" >> pom.xml
     mvn clean package
     mvn install
-    java -jar /backend-app/target/appwsc-platforminitializr.jar --git-user=$GIT_USER --git-token=$GIT__TOKEN --git-organization=$GIT_ORGANIZATION
+    java -jar /backend-app/target/appwsc-platforminitializr.jar --git-user=$GIT_USER --git-token=$GIT_TOKEN --git-organization=$GIT_ORGANIZATION

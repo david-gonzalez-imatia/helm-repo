@@ -54,13 +54,12 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.codeRepositories.frontendRepo.secretName }}
                   key: password
-          readinessProbe:
+          livenessProbe:
             httpGet:
               path: {{ .Values.probePath }}
               port: http
-            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
-            successThreshold: {{ .Values.readinessProbe.successThreshold }}
-            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
           startupProbe:
             httpGet:
               path: {{ .Values.probePath }}

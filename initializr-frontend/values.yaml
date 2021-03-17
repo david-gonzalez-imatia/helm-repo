@@ -36,14 +36,12 @@ service:
   port: 80
       
 probePath: /
-readinessProbe:
-  failureThreshold: 5
+livenessProbe:
+  failureThreshold: 3
   periodSeconds: 10
-  successThreshold: 1
-  timeoutSeconds: 1
 startupProbe:
-  failureThreshold: 12
-  periodSeconds: 10
+  failureThreshold: 10
+  periodSeconds: 30
 
 ingress:
   enabled: true
@@ -142,15 +140,13 @@ initializr-backend:
     type: ClusterIP
     port: 8080
     
-  probePath: /
-  readinessProbe:
-    failureThreshold: 5
+  probePath: /health
+  livenessProbe:
+    failureThreshold: 3
     periodSeconds: 10
-    successThreshold: 1
-    timeoutSeconds: 1
   startupProbe:
-    failureThreshold: 30
-    periodSeconds: 10
+    failureThreshold: 10
+    periodSeconds: 30
 
   ingress:
     enabled: true

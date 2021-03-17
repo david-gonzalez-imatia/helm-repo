@@ -44,14 +44,12 @@ service:
   port: 8080
 
 probePath: /health
-readinessProbe:
-  failureThreshold: 5
-  periodSeconds: 30
-  successThreshold: 1
-  timeoutSeconds: 1
-startupProbe:
-  failureThreshold: 30
+livenessProbe:
+  failureThreshold: 3
   periodSeconds: 10
+startupProbe:
+  failureThreshold: 10
+  periodSeconds: 30
 
 ingress:
   enabled: true

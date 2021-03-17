@@ -110,17 +110,21 @@ spec:
                 configMapKeyRef:
                   name: {{ .Values.tenantid }}
                   key: zone
+            - name: CLUSTER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.tenantid }}
+                  key: cluster
             {{- if .Values.provider.gke }}
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: "/mnt/credentials/credentials-json"
             {{- end }}
-          #readinessProbe:
-          #  httpGet:
-          #    path: {{ .Values.probePath }}
-          #    port: http
-          #  periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
-          #  successThreshold: {{ .Values.readinessProbe.successThreshold }}
-          #  timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.probePath }}
+              port: http
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
           startupProbe:
             httpGet:
               path: {{ .Values.probePath }}
