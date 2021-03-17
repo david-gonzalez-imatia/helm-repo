@@ -133,8 +133,8 @@ initializr-backend:
   provider:
     gke: true
     aws: false
-    secret: "secretjson"
-    credentials: "jx-tests-im-7f5e6b6ae5b7.json"
+  
+  tenantid: "imatiainnovationsl10"
   
   mavenRepository: http://nexus-jx.34.90.3.84.nip.io/repository/maven-group/ 
 
@@ -228,12 +228,6 @@ initializr-backend:
       user: "david-gonzalez-imatia"
       ref: "develop"
       secretName: "repo-secret"
-      
-  repoBot:
-    name: "imcloudbot"
-    organization: "implatformdev"
-    secretName: "repo-secret2"
-    email: "implatform.technology@imatia.com"
   
   postgresql:
     postgresqlPostgresPassword: test

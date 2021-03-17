@@ -78,16 +78,41 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.codeRepositories.templatesRepo.secretName }}
                   key: password
-            - name: REPOBOT_TOKEN
+            - name: GIT_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.repoBot.secretName }}
-                  key: password
+                  name: {{ .Values.tenantid }}-secret
+                  key: git-token
             - name: DATABASE_SERVICE
               value: {{ .Release.Name }}-postgresql
+            - name: GIT_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.tenantid }}
+                  key: git-user
+            - name: GIT_ORGANIZATION
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.tenantid }}
+                  key: git-organization
+            - name: EMAIL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.tenantid }}
+                  key: email
+            - name: PROJECT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.tenantid }}
+                  key: project
+            - name: ZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.tenantid }}
+                  key: zone
             {{- if .Values.provider.gke }}
             - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: "/mnt/credentials/{{ .Values.provider.credentials }}"
+              value: "/mnt/credentials/credentials-json"
             {{- end }}
           #readinessProbe:
           #  httpGet:
@@ -115,7 +140,7 @@ spec:
         {{- if .Values.provider.gke }}
         - name: credentials-volume
           secret:
-            secretName: {{ .Values.provider.secret }}
+            secretName: {{ .Values.tenantid }}-secret
         {{- end }}
         - name: templates-volume
         {{- if .Values.persistence.enabled }}

@@ -87,17 +87,17 @@ data:
     #gcloud components install kubectl -q
     # **************** Use secret and helm for credentials json file ***********
     source ~/.bashrc
-    gcloud auth activate-service-account --key-file="/mnt/credentials/{{ .Values.provider.credentials }}"
+    gcloud auth activate-service-account --key-file="/mnt/credentials/credentials-json"
     # **************** Use helm to set project ***********
-    #gcloud config set project my-project
+    gcloud config set project $PROJECT
     
     # Install jx
     curl -L "https://github.com/jenkins-x/jx/releases/download/$(curl --silent "https://github.com/jenkins-x/jx/releases/latest" | sed 's#.*tag/\(.*\)\".*#\1#')/jx-linux-amd64.tar.gz" | tar xzv "jx"
     mv jx /usr/local/bin
     
     # Config git
-    git config --global user.email "{{ .Values.repoBot.email }}"
-    git config --global user.name "{{ .Values.repoBot.name }}"
+    git config --global user.email $EMAIL
+    git config --global user.name $GIT_USER
     
     ## Copy generator sources
     # Get code with github api and curl
@@ -136,4 +136,4 @@ data:
     echo -e "<repositories>\n<repository>\n<id>nexus</id>\n<url>{{ .Values.mavenRepository }}</url>\n</repository>\n</repositories>\n</project>" >> pom.xml
     mvn clean package
     mvn install
-    java -jar /backend-app/target/appwsc-platforminitializr.jar --git-user={{ .Values.repoBot.name }} --git-token=$REPOBOT_TOKEN --git-organization={{ .Values.repoBot.organization }}
+    java -jar /backend-app/target/appwsc-platforminitializr.jar --git-user=$GIT_USER --git-token=$GIT__TOKEN --git-organization=$GIT_ORGANIZATION
