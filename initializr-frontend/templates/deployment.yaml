@@ -54,18 +54,18 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.codeRepositories.frontendRepo.secretName }}
                   key: password
-          livenessProbe:
-            httpGet:
-              path: {{ .Values.probePath }}
-              port: http
-            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
-            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
-          startupProbe:
-            httpGet:
-              path: {{ .Values.probePath }}
-              port: http
-            periodSeconds: {{ .Values.startupProbe.periodSeconds }}
-            failureThreshold: {{ .Values.startupProbe.failureThreshold }}
+#          livenessProbe:
+#            httpGet:
+#              path: {{ .Values.probePath }}
+#              port: http
+#            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+#            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+#          startupProbe:
+#            httpGet:
+#              path: {{ .Values.probePath }}
+#              port: http
+#            periodSeconds: {{ .Values.startupProbe.periodSeconds }}
+#            failureThreshold: {{ .Values.startupProbe.failureThreshold }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:

@@ -119,18 +119,18 @@ spec:
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: "/mnt/credentials/credentials-json"
             {{- end }}
-          livenessProbe:
-            httpGet:
-              path: {{ .Values.probePath }}
-              port: http
-            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
-            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
-          startupProbe:
-            httpGet:
-              path: {{ .Values.probePath }}
-              port: http
-            periodSeconds: {{ .Values.startupProbe.periodSeconds }}
-            failureThreshold: {{ .Values.startupProbe.failureThreshold }}
+#          livenessProbe:
+#            httpGet:
+#              path: {{ .Values.probePath }}
+#              port: http
+#            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+#            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+#          startupProbe:
+#            httpGet:
+#              path: {{ .Values.probePath }}
+#              port: http
+#            periodSeconds: {{ .Values.startupProbe.periodSeconds }}
+#            failureThreshold: {{ .Values.startupProbe.failureThreshold }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
