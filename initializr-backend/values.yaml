@@ -37,7 +37,7 @@ provider:
 
 tenantid: "imatiainnovationsl10"
   
-mavenRepository: http://nexus-jx.34.90.3.84.nip.io/repository/maven-group/ 
+mavenRepository: https://artifactory.imatia.com/public-artifactory/libs-release 
 
 service:
   type: ClusterIP

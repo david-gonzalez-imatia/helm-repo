@@ -1,4 +1,4 @@
-{{- $fullName := include "initializr-backend.fullname" . -}}
+{{- $fullName := include "initializr-frontend.fullname" . -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
