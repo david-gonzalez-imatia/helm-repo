@@ -1,7 +1,8 @@
+{{- $fullName := include "initializr-backend.fullname" . -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: backend-config
+  name: {{ $fullName }}-config
 data:
   install_node.sh: |
     #!/bin/bash

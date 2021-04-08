@@ -71,7 +71,7 @@ spec:
       volumes:
         - name: install-node-sh
           configMap:
-            name: frontend-config
+            name: {{ include "initializr-backend.fullname" . }}-config
             defaultMode: 0777
             items:
               - key: install_node.sh

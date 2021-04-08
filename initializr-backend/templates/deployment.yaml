@@ -99,7 +99,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: {{ .Values.tenantid }}
-                  key: email
+                  key: git-user-email
             - name: PROJECT
               valueFrom:
                 configMapKeyRef:
@@ -136,7 +136,7 @@ spec:
       volumes:
         - name: install-node-sh
           configMap:
-            name: backend-config
+            name: {{ include "initializr-backend.fullname" . }}-config
             defaultMode: 0777
             items:
               - key: install_node.sh
