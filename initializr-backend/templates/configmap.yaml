@@ -134,8 +134,8 @@ data:
     git clone https://oauth2:$BACKENDREPO_PASSWORD@github.com/{{ .Values.codeRepositories.backendRepo.owner }}/{{ .Values.codeRepositories.backendRepo.name }}.git --branch {{ .Values.codeRepositories.backendRepo.ref }}
     mv {{ .Values.codeRepositories.backendRepo.name }} /backend-app
     cd /backend-app
-    sed -i "s/<\/project>//" pom.xml
-    echo -e "<repositories>\n<repository>\n<id>nexus</id>\n<url>{{ .Values.mavenRepository }}</url>\n</repository>\n</repositories>\n</project>" >> pom.xml
+    #sed -i "s/<\/project>//" pom.xml
+    #echo -e "<repositories>\n<repository>\n<id>nexus</id>\n<url>{{ .Values.mavenRepository }}</url>\n</repository>\n</repositories>\n</project>" >> pom.xml
     mvn clean package
     mvn install
     java -jar /backend-app/target/appwsc-platforminitializr.jar --git-user=$GIT_USER --git-token=$GIT_TOKEN --git-organization=$GIT_ORGANIZATION

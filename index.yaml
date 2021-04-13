@@ -3,7 +3,24 @@ entries:
   initializr-backend:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-04-08T18:16:02.617389665+02:00"
+    created: "2021-04-13T12:18:24.060554061+02:00"
+    dependencies:
+    - name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 8.10.14
+    description: A Helm chart for Kubernetes
+    digest: 1c949ccda9171bc2653c8c8ff472af6e411f04dabb8e53b8771d5e8d5539f47d
+    name: initializr-backend
+    urls:
+    - https://david-gonzalez-imatia.github.io/helm-repo/initializr-backend-0.4.2.tgz
+    version: 0.4.2
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: "2021-04-13T12:18:24.05834988+02:00"
+    dependencies:
+    - name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 8.10.14
     description: A Helm chart for Kubernetes
     digest: d171b585be34a0854e1d28294e234e910b0dcb0ad3cb734c1f2bcca3853928bf
     name: initializr-backend
@@ -12,7 +29,11 @@ entries:
     version: 0.4.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-04-08T18:16:02.615338761+02:00"
+    created: "2021-04-13T12:18:24.054129255+02:00"
+    dependencies:
+    - name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 8.10.14
     description: A Helm chart for Kubernetes
     digest: 000531e1b360aaca18c67cc922f78a00f57ce0297c517ce86a7c25cae3330366
     name: initializr-backend
@@ -21,7 +42,11 @@ entries:
     version: 0.4.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-04-08T18:16:02.612401958+02:00"
+    created: "2021-04-13T12:18:24.051153487+02:00"
+    dependencies:
+    - name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 8.10.14
     description: A Helm chart for Kubernetes
     digest: 7e771e6559fa9286636b5f513ec4c193f40422c1e492444b44cc867983b62686
     name: initializr-backend
@@ -30,7 +55,7 @@ entries:
     version: 0.3.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-04-08T18:16:02.610180283+02:00"
+    created: "2021-04-13T12:18:24.047912541+02:00"
     description: A Helm chart for Kubernetes
     digest: 934a9b96756d1c47d508d17531abd2fc68ee8b0bb16dcbac9732fbf70c24bd9c
     name: initializr-backend
@@ -39,7 +64,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-04-08T18:16:02.60926022+02:00"
+    created: "2021-04-13T12:18:24.047063389+02:00"
     description: A Helm chart for Kubernetes
     digest: 6dde2767d333d399cf945cd8f353e463041967ec0e75848d95d0f5831b5775bb
     name: initializr-backend
@@ -49,7 +74,24 @@ entries:
   initializr-frontend:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-04-08T18:16:02.626090209+02:00"
+    created: "2021-04-13T12:18:24.079586816+02:00"
+    dependencies:
+    - name: initializr-backend
+      repository: https://david-gonzalez-imatia.github.io/helm-repo/
+      version: 0.4.1
+    description: A Helm chart for Kubernetes
+    digest: 4f5bdb4cad98d447e41acfda44526a6db0770758fa3f6e3cc26e617748db587d
+    name: initializr-frontend
+    urls:
+    - https://david-gonzalez-imatia.github.io/helm-repo/initializr-frontend-0.4.2.tgz
+    version: 0.4.2
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: "2021-04-13T12:18:24.076578927+02:00"
+    dependencies:
+    - name: initializr-backend
+      repository: https://david-gonzalez-imatia.github.io/helm-repo/
+      version: 0.4.1
     description: A Helm chart for Kubernetes
     digest: 9dc763358dd033092fd3bc043bac2d0ae0eda84974cf7a373d8c533504c8a3b4
     name: initializr-frontend
@@ -58,7 +100,11 @@ entries:
     version: 0.4.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-04-08T18:16:02.624040079+02:00"
+    created: "2021-04-13T12:18:24.072530127+02:00"
+    dependencies:
+    - name: initializr-backend
+      repository: https://david-gonzalez-imatia.github.io/helm-repo/
+      version: 0.4.0
     description: A Helm chart for Kubernetes
     digest: 1082d4947b0db580ab59e5867c64bd32ed84622c0bf77df6cf0b45b6544c4827
     name: initializr-frontend
@@ -67,7 +113,11 @@ entries:
     version: 0.4.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-04-08T18:16:02.621713674+02:00"
+    created: "2021-04-13T12:18:24.067019163+02:00"
+    dependencies:
+    - name: initializr-backend
+      repository: https://david-gonzalez-imatia.github.io/helm-repo/
+      version: 0.3.0
     description: A Helm chart for Kubernetes
     digest: 632d5adba46d1faedb5b01f32c1fcea079f7fdcecaff47b8989db89c63ea1151
     name: initializr-frontend
@@ -76,7 +126,11 @@ entries:
     version: 0.3.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-04-08T18:16:02.619333412+02:00"
+    created: "2021-04-13T12:18:24.063134521+02:00"
+    dependencies:
+    - name: initializr-backend
+      repository: https://david-gonzalez-imatia.github.io/helm-repo/
+      version: 0.2.0
     description: A Helm chart for Kubernetes
     digest: 35a3416e6cfa3d68f4955fa110f15f8ec2994be50eea0c196a1e034b7c7e52ef
     name: initializr-frontend
@@ -85,11 +139,32 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-04-08T18:16:02.618254932+02:00"
+    created: "2021-04-13T12:18:24.061798775+02:00"
+    dependencies:
+    - name: initializr-backend
+      repository: ""
+      version: 0.1.0
     description: A Helm chart for Kubernetes
     digest: 4b3f8bc278d3db817e65598dadb6c5727936ad0307121cdb126c8e6838bb5ee9
     name: initializr-frontend
     urls:
     - https://david-gonzalez-imatia.github.io/helm-repo/initializr-frontend-0.1.0.tgz
     version: 0.1.0
-generated: "2021-04-08T18:16:02.600844851+02:00"
+  nfs-server-provisioner:
+  - apiVersion: v1
+    appVersion: 2.3.0
+    created: "2021-04-13T12:18:24.080476232+02:00"
+    deprecated: true
+    description: DEPRECATED - nfs-server-provisioner is an out-of-tree dynamic provisioner for Kubernetes. You can use it to quickly & easily deploy shared storage that works almost anywhere.
+    digest: 26d5b5ba6534e344c7b849bba61a621c9a23859b7a3caccfae844817628590d9
+    home: https://github.com/kubernetes/charts/tree/master/stable/nfs-server-provisioner
+    keywords:
+    - nfs
+    - storage
+    name: nfs-server-provisioner
+    sources:
+    - https://github.com/kubernetes-incubator/external-storage/tree/master/nfs
+    urls:
+    - https://david-gonzalez-imatia.github.io/helm-repo/nfs-server-provisioner-1.1.3.tgz
+    version: 1.1.3
+generated: "2021-04-13T12:18:24.045932441+02:00"
