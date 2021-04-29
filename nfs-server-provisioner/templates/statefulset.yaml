@@ -122,25 +122,6 @@ spec:
           emptyDir: {}
       {{- end }}
 
-### Init container to download templates ###
-      initContainers:
-      - name: init-templates
-        image: alpine/git
-        command: ["/bin/sh"]
-        #args: ["-f",">","/dev/null"]
-        #args: ["-C", "/templates", "clone", "https://oauth2:$(TEMPLATESREPO_TOKEN)@github.com/{{ .Values.templatesRepository.owner }}/{{ .Values.templatesRepository.name }}.git","-b", "{{ .Values.templatesRepository.ref }}","."]
-        args: ["-c","/usr/bin/git -C /templates clone https://oauth2:$(TEMPLATESREPO_TOKEN)@github.com/{{ .Values.templatesRepository.owner }}/{{ .Values.templatesRepository.name }}.git -b {{ .Values.templatesRepository.ref }} || /usr/bin/git -C /templates/{{ .Values.templatesRepository.name }} pull origin {{ .Values.templatesRepository.ref }}" ]
-        env:
-        - name: TEMPLATESREPO_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Values.templatesRepository.token }}
-              key: token
-        volumeMounts:
-        - name: data
-          mountPath: /templates
-########### end init container ############
-
   {{- if .Values.persistence.enabled }}
   volumeClaimTemplates:
     - metadata:

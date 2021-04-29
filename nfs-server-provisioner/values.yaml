@@ -96,9 +96,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-templatesRepository:
-  name: "APPCLR-PlatformInitializr-templates"
-  owner: "implatformdev"
-  ref: "develop"
-  token: "templates-token"
