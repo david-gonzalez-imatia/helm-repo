@@ -1,7 +1,8 @@
+{{- $fullName := include "initializr-frontend.fullname" . -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: frontend-config
+  name: {{ $fullName }}-config
 data:
   install_node.sh: |
     #!/bin/sh

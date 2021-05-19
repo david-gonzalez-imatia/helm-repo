@@ -34,8 +34,6 @@ spec:
               containerPort: 8080
               protocol: TCP
           volumeMounts:
-            - name: templates-volume
-              mountPath: /tmp/platform-initializr/APPCLR-PlatformInitializr-templates/
             - name: install-node-sh
               mountPath: /docker-entrypoint.d/
             {{- if .Values.provider.gke }}
@@ -89,25 +87,28 @@ spec:
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: "/mnt/credentials/{{ .Values.provider.credentials }}"
             {{- end }}
-          #readinessProbe:
-          #  httpGet:
-          #    path: {{ .Values.probePath }}
-          #    port: http
-          #  periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
-          #  successThreshold: {{ .Values.readinessProbe.successThreshold }}
-          #  timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
-          startupProbe:
+          livenessProbe:
             httpGet:
               path: {{ .Values.probePath }}
-              port: http
-            periodSeconds: {{ .Values.startupProbe.periodSeconds }}
-            failureThreshold: {{ .Values.startupProbe.failureThreshold }}
+              port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            successThreshold: {{ .Values.livenessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.probePath }}
+              port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
         - name: install-node-sh
           configMap:
-            name: backend-config
+            name: {{ include "initializr-backend.fullname" . }}-config
             defaultMode: 0777
             items:
               - key: install_node.sh
@@ -117,15 +118,6 @@ spec:
           secret:
             secretName: {{ .Values.provider.secret }}
         {{- end }}
-        - name: templates-volume
-        {{- if .Values.persistence.enabled }}
-          persistentVolumeClaim:
-            claimName: {{ .Values.persistence.existingClaim | default (include "initializr-backend.fullname" .) }}
-        {{- else }}
-          emptyDir: {}
-        {{- end }}
-        #  persistentVolumeClaim:
-        #    claimName: templates-volumeclaim
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -138,11 +130,3 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-  #volumeClaimTemplates:
-  #  - metadata:
-  #      name: templates-volumeclaim
-  #    spec:
-  #      accessModes: ["ReadWriteOnce"]
-  #      resources:
-  #        requests:
-  #          storage: 10Mi

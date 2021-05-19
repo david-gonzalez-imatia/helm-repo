@@ -1,7 +1,8 @@
+{{- $fullName := include "initializr-backend.fullname" . -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: backend-config
+  name: {{ $fullName }}-config
 data:
   install_node.sh: |
     #!/bin/bash
@@ -92,7 +93,7 @@ data:
     #gcloud config set project my-project
     
     # Install jx
-    curl -L "https://github.com/jenkins-x/jx/releases/download/$(curl --silent "https://github.com/jenkins-x/jx/releases/latest" | sed 's#.*tag/\(.*\)\".*#\1#')/jx-linux-amd64.tar.gz" | tar xzv "jx"
+    curl -L "https://github.com/jenkins-x/jx/releases/download/v2.1.155/jx-linux-amd64.tar.gz" | tar xzv "jx"
     mv jx /usr/local/bin
     
     # Config git
@@ -121,7 +122,7 @@ data:
       mv {{ .Values.codeRepositories.templatesRepo.name }}/* /tmp/platform-initializr/{{ .Values.codeRepositories.templatesRepo.name }}
       shopt -u dotglob
     else
-      echo "Templates already present in persistent volume"
+      echo "Templates already present in path"
     fi
     ## Copy springboot sources and install dependencies
     # Get code with github api and curl
@@ -132,8 +133,8 @@ data:
     git clone https://oauth2:$BACKENDREPO_PASSWORD@github.com/{{ .Values.codeRepositories.backendRepo.owner }}/{{ .Values.codeRepositories.backendRepo.name }}.git --branch {{ .Values.codeRepositories.backendRepo.ref }}
     mv {{ .Values.codeRepositories.backendRepo.name }} /backend-app
     cd /backend-app
-    sed -i "s/<\/project>//" pom.xml
-    echo -e "<repositories>\n<repository>\n<id>nexus</id>\n<url>{{ .Values.mavenRepository }}</url>\n</repository>\n</repositories>\n</project>" >> pom.xml
+    #sed -i "s/<\/project>//" pom.xml
+    #echo -e "<repositories>\n<repository>\n<id>nexus</id>\n<url>{{ .Values.mavenRepository }}</url>\n</repository>\n</repositories>\n</project>" >> pom.xml
     mvn clean package
     mvn install
     java -jar /backend-app/target/appwsc-platforminitializr.jar --git-user={{ .Values.repoBot.name }} --git-token=$REPOBOT_TOKEN --git-organization={{ .Values.repoBot.organization }}

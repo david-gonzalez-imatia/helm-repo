@@ -54,32 +54,35 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.codeRepositories.frontendRepo.secretName }}
                   key: password
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.probePath }}
+              port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            successThreshold: {{ .Values.livenessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
           readinessProbe:
             httpGet:
               path: {{ .Values.probePath }}
-              port: http
+              port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
             successThreshold: {{ .Values.readinessProbe.successThreshold }}
             timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
-          startupProbe:
-            httpGet:
-              path: {{ .Values.probePath }}
-              port: http
-            periodSeconds: {{ .Values.startupProbe.periodSeconds }}
-            failureThreshold: {{ .Values.startupProbe.failureThreshold }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
         - name: install-node-sh
           configMap:
-            name: frontend-config
+            name: {{ include "initializr-frontend.fullname" . }}-config
             defaultMode: 0777
             items:
               - key: install_node.sh
                 path: install_node.sh
         - name: nginx-cnf
           configMap:
-            name: frontend-config
+            name: {{ include "initializr-frontend.fullname" . }}-config
             defaultMode: 0644
             items:
               - key: default.cnf
