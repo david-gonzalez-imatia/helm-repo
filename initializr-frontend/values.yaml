@@ -37,12 +37,12 @@ service:
       
 probePath: /
 livenessProbe:
-  initialDelaySeconds: 120
+  initialDelaySeconds: 300
   periodSeconds: 10
   successThreshold: 1
   timeoutSeconds: 1
 readinessProbe:
-  initialDelaySeconds: 120
+  initialDelaySeconds: 300
   failureThreshold: 3
   periodSeconds: 10
   successThreshold: 1
@@ -54,7 +54,7 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: imatia.34.90.3.84.nip.io
+    - host: imatiatest.34.90.3.84.nip.io
       paths: [/]
 
   tls: []
@@ -147,12 +147,12 @@ initializr-backend:
     
   probePath: /health
   livenessProbe:
-    initialDelaySeconds: 300
+    initialDelaySeconds: 600
     periodSeconds: 10
     successThreshold: 1
     timeoutSeconds: 1
   readinessProbe:
-    initialDelaySeconds: 300
+    initialDelaySeconds: 600
     failureThreshold: 3
     periodSeconds: 10
     successThreshold: 1
@@ -164,7 +164,7 @@ initializr-backend:
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
     hosts:
-      - host: initializr-backend.34.90.3.84.nip.io
+      - host: initializr-backendtest.34.90.3.84.nip.io
         paths: [/]
 
     tls: []
@@ -225,7 +225,7 @@ initializr-backend:
       name: "APPWSC-PlatformInitializr"
       owner: "imatia-innovation"
       user: "david-gonzalez-imatia"
-      ref: "develop"
+      ref: "jx-activities"
       secretName: "repo-secret"
     # Templates for the generator
     templatesRepo:
