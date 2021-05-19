@@ -35,7 +35,7 @@ provider:
   gke: true
   aws: false
 
-tenantid: "imatiainnovationsl10"
+tenantid: "democluster"
   
 mavenRepository: https://artifactory.imatia.com/public-artifactory/libs-release 
 
@@ -45,11 +45,16 @@ service:
 
 probePath: /health
 livenessProbe:
+  initialDelaySeconds: 300
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 1
+readinessProbe:
+  initialDelaySeconds: 300
   failureThreshold: 3
   periodSeconds: 10
-startupProbe:
-  failureThreshold: 10
-  periodSeconds: 30
+  successThreshold: 1
+  timeoutSeconds: 1
 
 ingress:
   enabled: true
@@ -109,23 +114,23 @@ codeRepositories:
   # Yeoman based application to generate the project from the templates
   generatorRepo:
     name: "APPCLR-PlatformInitializr"
-    owner: "imatia-innovation"
+    owner: "implatformdev"
     user: "david-gonzalez-imatia"
     ref: "develop"
     secretName: "repo-secret"
   # Springboot backend with REST api
   backendRepo:
     name: "APPWSC-PlatformInitializr"
-    owner: "imatia-innovation"
+    owner: "implatformdev"
     user: "david-gonzalez-imatia"
-    ref: "jx-activities"
+    ref: "develop"
     secretName: "repo-secret"
   # Templates for the generator
   templatesRepo:
     name: "APPCLR-PlatformInitializr-templates"
-    owner: "imatia-innovation"
+    owner: "implatformdev"
     user: "david-gonzalez-imatia"
-    ref: "develop"
+    ref: "bugfix/errors-deploy"
     secretName: "repo-secret"
   
 postgresql:

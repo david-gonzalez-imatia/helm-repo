@@ -54,18 +54,22 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.codeRepositories.frontendRepo.secretName }}
                   key: password
-#          livenessProbe:
-#            httpGet:
-#              path: {{ .Values.probePath }}
-#              port: http
-#            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
-#            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
-#          startupProbe:
-#            httpGet:
-#              path: {{ .Values.probePath }}
-#              port: http
-#            periodSeconds: {{ .Values.startupProbe.periodSeconds }}
-#            failureThreshold: {{ .Values.startupProbe.failureThreshold }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.probePath }}
+              port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            successThreshold: {{ .Values.livenessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.probePath }}
+              port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:

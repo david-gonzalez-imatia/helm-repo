@@ -37,11 +37,16 @@ service:
       
 probePath: /
 livenessProbe:
+  initialDelaySeconds: 120
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 1
+readinessProbe:
+  initialDelaySeconds: 120
   failureThreshold: 3
   periodSeconds: 10
-startupProbe:
-  failureThreshold: 10
-  periodSeconds: 30
+  successThreshold: 1
+  timeoutSeconds: 1
 
 ingress:
   enabled: true
@@ -81,7 +86,7 @@ codeRepositories:
     name: "APPWEB-PlatformInitializr"
     owner: "imatia-innovation"
     user: "david-gonzalez-imatia"
-    ref: "jx-activities"
+    ref: "develop"
     secretName: "repo-secret"
 
 backend:
@@ -132,7 +137,7 @@ initializr-backend:
     gke: true
     aws: false
   
-  tenantid: "imatiainnovationsl10"
+  tenantid: "democluster"
   
   mavenRepository: http://nexus-jx.34.90.3.84.nip.io/repository/maven-group/ 
 
@@ -142,11 +147,16 @@ initializr-backend:
     
   probePath: /health
   livenessProbe:
+    initialDelaySeconds: 300
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 1
+  readinessProbe:
+    initialDelaySeconds: 300
     failureThreshold: 3
     periodSeconds: 10
-  startupProbe:
-    failureThreshold: 10
-    periodSeconds: 30
+    successThreshold: 1
+    timeoutSeconds: 1
 
   ingress:
     enabled: true
@@ -215,14 +225,14 @@ initializr-backend:
       name: "APPWSC-PlatformInitializr"
       owner: "imatia-innovation"
       user: "david-gonzalez-imatia"
-      ref: "jx-activities"
+      ref: "develop"
       secretName: "repo-secret"
     # Templates for the generator
     templatesRepo:
       name: "APPCLR-PlatformInitializr-templates"
-      owner: "imatia-innovation"
+      owner: "implatformdev"
       user: "david-gonzalez-imatia"
-      ref: "develop"
+      ref: "bugfix/errors-deploy"
       secretName: "repo-secret"
   
   postgresql:
