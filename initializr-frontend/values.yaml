@@ -37,12 +37,12 @@ service:
       
 probePath: /  
 livenessProbe:
-  initialDelaySeconds: 120
+  initialDelaySeconds: 300
   periodSeconds: 10
   successThreshold: 1
   timeoutSeconds: 1
 readinessProbe:
-  initialDelaySeconds: 120
+  initialDelaySeconds: 300
   failureThreshold: 3
   periodSeconds: 10
   successThreshold: 1
@@ -84,7 +84,7 @@ codeRepositories:
   # Angular frontend
   frontendRepo:
     name: "APPWEB-PlatformInitializr"
-    owner: "implatformdev"
+    owner: "imatia-innovation"
     user: "david-gonzalez-imatia"
     ref: "develop"
     secretName: "repo-secret"
@@ -147,12 +147,12 @@ initializr-backend:
     
   probePath: /health 
   livenessProbe:
-    initialDelaySeconds: 600
+    initialDelaySeconds: 480
     periodSeconds: 10
     successThreshold: 1
     timeoutSeconds: 1
   readinessProbe:
-    initialDelaySeconds: 600
+    initialDelaySeconds: 480
     failureThreshold: 3
     periodSeconds: 10
     successThreshold: 1
@@ -216,16 +216,16 @@ initializr-backend:
     # Yeoman based application to generate the project from the templates
     generatorRepo:
       name: "APPCLR-PlatformInitializr"
-      owner: "implatformdev"
+      owner: "imatia-innovation"
       user: "david-gonzalez-imatia"
       ref: "develop"
       secretName: "repo-secret"
     # Springboot backend with REST api
     backendRepo:
       name: "APPWSC-PlatformInitializr"
-      owner: "implatformdev"
+      owner: "imatia-innovation"
       user: "david-gonzalez-imatia"
-      ref: "develop"
+      ref: "jx-activities"
       secretName: "repo-secret"
     # Templates for the generator
     templatesRepo:

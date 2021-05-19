@@ -118,8 +118,9 @@ data:
     cd
     if [ ! -d "/tmp/platform-initializr/{{ .Values.codeRepositories.templatesRepo.name }}/java" ]; then
       git clone https://oauth2:$TEMPLATESREPO_PASSWORD@github.com/{{ .Values.codeRepositories.templatesRepo.owner }}/{{ .Values.codeRepositories.templatesRepo.name }}.git --branch {{ .Values.codeRepositories.templatesRepo.ref }}
+      mkdir /tmp/platform-initializr/
       shopt -s dotglob
-      mv {{ .Values.codeRepositories.templatesRepo.name }}/* /tmp/platform-initializr/{{ .Values.codeRepositories.templatesRepo.name }}
+      mv {{ .Values.codeRepositories.templatesRepo.name }} /tmp/platform-initializr/
       shopt -u dotglob
     else
       echo "Templates already present in path"
