@@ -230,9 +230,9 @@ initializr-backend:
     # Templates for the generator
     templatesRepo:
       name: "APPCLR-PlatformInitializr-templates"
-      owner: "implatformdev"
+      owner: "imatia-innovation"
       user: "david-gonzalez-imatia"
-      ref: "bugfix/errors-deploy"
+      ref: "develop"
       secretName: "repo-secret"
   
   postgresql:
